@@ -229,7 +229,6 @@
                 <!-- Melhorada Responsividade: Em linha no mobile (para economizar espaço), em coluna no desktop (sm:) -->
                 <div id="icon-bar" class="flex flex-row sm:flex-col space-x-4 sm:space-x-0 sm:space-y-4 mt-8 sm:ml-10 sm:mt-2">
                     
-
                     <!-- Ícone Lira Dutra (AZUL) - Agora abre Modal -->
                     <button data-title="Lira Dutra" data-icon="fas fa-user-tie" data-type="modal" class="desktop-icon flex flex-col items-center p-3 w-28 h-28 rounded-xl drop-shadow-xl focus:outline-none">
                         <i class="fas fa-user-tie text-6xl text-blue-400"></i>
@@ -258,43 +257,43 @@
             </div>
         </div>
 
-        <!-- 4. Menu na Parte Inferior (Dock estilo Mac) - ITENS MANTÊM MESSAGE BOX -->
+        <!-- 4. Menu na Parte Inferior (Dock estilo Mac) - AGORA TUDO SÃO LINKS EXTERNOS -->
         <nav id="dock" class="mb-6 p-4 bg-white/30 backdrop-blur-xl rounded-2xl shadow-2xl flex space-x-6 border border-white/40">
             
-            <!-- Item: Exercícios (VERDE LIMÃO) -->
-            <button data-title="Exercícios" data-icon="fas fa-dumbbell" class="dock-item flex flex-col items-center p-2 rounded-xl">
+            <!-- Item: Exercícios (VERDE LIMÃO) - Atualizado para Link Externo -->
+            <button data-title="Exercícios" data-icon="fas fa-dumbbell" data-type="external-link" data-url="https://www.todamateria.com.br/exercicios" class="dock-item flex flex-col items-center p-2 rounded-xl">
                 <i class="fas fa-dumbbell text-3xl text-lime-400"></i>
                 <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Exercícios</span>
             </button>
             
-            <!-- Item: Vídeos (VERMELHO) -->
-            <button data-title="Vídeos" data-icon="fas fa-film" class="dock-item flex flex-col items-center p-2 rounded-xl">
+            <!-- Item: Vídeos (VERMELHO) - Atualizado para Link Externo -->
+            <button data-title="Vídeos" data-icon="fas fa-film" data-type="external-link" data-url="https://enemnarede.seduc.ce.gov.br/curso/9/" class="dock-item flex flex-col items-center p-2 rounded-xl">
                 <i class="fas fa-film text-3xl text-red-500"></i>
                 <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Vídeos</span>
             </button>
 
-            <!-- Item: Podcast (ROSA) -->
-            <button data-title="Podcast" data-icon="fas fa-microphone-alt" class="dock-item flex flex-col items-center p-2 rounded-xl">
+            <!-- Item: Podcast (ROSA) - Atualizado para Link Externo -->
+            <button data-title="Podcast" data-icon="fas fa-microphone-alt" data-type="external-link" data-url="https://brasilescola.uol.com.br/podcasts/historia.htm" class="dock-item flex flex-col items-center p-2 rounded-xl">
                 <i class="fas fa-microphone-alt text-3xl text-pink-500"></i>
                 <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Podcast</span>
             </button>
 
-            <!-- Item: Mapa Mental (CIANO) -->
-            <button data-title="Mapa Mental" data-icon="fas fa-brain" class="dock-item flex flex-col items-center p-2 rounded-xl">
+            <!-- Item: Canal Youtube (CIANO) - Atualizado para Link Externo e URL fornecida -->
+            <button data-title="Canal Youtube" data-icon="fas fa-brain" data-type="external-link" data-url="https://www.youtube.com/@vozesdamacaboqueira" class="dock-item flex flex-col items-center p-2 rounded-xl">
                 <i class="fas fa-brain text-3xl text-cyan-400"></i>
-                <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Mapa Mental</span>
+                <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Canal Youtube</span>
             </button>
             
-            <!-- Item: Infográficos (LARANJA) -->
-            <button data-title="Infográficos" data-icon="fas fa-chart-bar" class="dock-item flex flex-col items-center p-2 rounded-xl">
+            <!-- Item: Infográficos (LARANJA) - Atualizado para Link Externo -->
+            <button data-title="Infográficos" data-icon="fas fa-chart-bar" data-type="external-link" data-url="https://geografiavisual.com.br/categoria/infografico" class="dock-item flex flex-col items-center p-2 rounded-xl">
                 <i class="fas fa-chart-bar text-3xl text-orange-400"></i>
                 <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Infográficos</span>
             </button>
             
-            <!-- Item: Sites Amigos (AMARELO) -->
-            <button data-title="Sites Amigos" data-icon="fas fa-link" class="dock-item flex flex-col items-center p-2 rounded-xl">
+            <!-- Item: INEP/ENEM (AMARELO) - Atualizado para Link Externo e URL fornecida -->
+            <button data-title="INEP/ENEM" data-icon="fas fa-link" data-type="external-link" data-url="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem" class="dock-item flex flex-col items-center p-2 rounded-xl">
                 <i class="fas fa-link text-3xl text-yellow-400"></i>
-                <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Sites Amigos</span>
+                <span class="text-xs mt-1 font-medium hidden sm:block dock-label">INEP/ENEM</span>
             </button>
 
         </nav>
@@ -607,630 +606,20 @@
                 });
             });
 
-            // 5. Adiciona listeners de clique para os Itens do Dock (mantém o showMessage e o feedback visual CSS)
+            // 5. Adiciona listeners de clique para os Itens do Dock (agora suporta links externos)
             document.querySelectorAll('.dock-item').forEach(item => {
                 item.addEventListener('click', (e) => {
-                    const title = e.currentTarget.getAttribute('data-title');
-                    showMessage(`Abrir Recurso`, `O recurso "${title}" foi acessado. (Em breve teremos o app completo!)`);
-                });
-            });
-        };
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desktop ENEM</title>
-    <!-- Carrega Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Carrega Font Awesome para ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <script>
-        // Configuração customizada do Tailwind para usar a fonte Inter
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    <style>
-        /* Estilo base para garantir o layout de tela cheia */
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            height: 100vh;
-            width: 100vw;
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Estilo da imagem de fundo - Usando o link RAW do Github para garantir o carregamento */
-        #desktop-background {
-            background-image: url('https://raw.githubusercontent.com/macaboqueira/enem/main/fundotela.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        /* Efeito de zoom/elevação no Dock (Estilo Mac) */
-        .dock-item {
-            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-            cursor: pointer;
-        }
-        .dock-item:hover {
-            transform: translateY(-10px) scale(1.15);
-            z-index: 10;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        }
-        /* Feedback visual ao clicar nos itens do Dock */
-        .dock-item:active {
-            transform: translateY(-5px) scale(1.05);
-        }
-
-
-        /* Estilo para ícones grandes e clicáveis */
-        .desktop-icon {
-            transition: background-color 0.15s ease-in-out, transform 0.1s ease-in-out;
-            cursor: pointer;
-            /* Usamos text-white aqui para as labels ficarem brancas */
-            color: white; 
-        }
-        .desktop-icon:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-        .desktop-icon:active {
-            transform: scale(0.95);
-        }
-        /* Garantindo que o texto do dock seja branco e o ícone colorido */
-        .dock-label {
-            color: white;
-        }
-
-        /* Estilo da Janela Modal - Similar ao Ubuntu/Mac */
-        #desktop-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 800px;
-            height: 80%;
-            max-height: 90vh;
-            background: #f7f7f7; /* Fundo claro para o conteúdo */
-            border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            z-index: 40;
-            transition: all 0.3s ease; /* Transição para Maximizar/Restaurar */
-            overflow: hidden; 
-        }
-        
-        /* Estilo para a janela maximizada (tela cheia) */
-        #desktop-modal.maximized {
-            width: 100%;
-            max-width: 100vw;
-            height: 100%;
-            max-height: 100vh;
-            top: 0 !important; /* Força posição máxima, ignorando o arrasto */
-            left: 0 !important;
-            transform: none !important; /* Remove a translação */
-            border-radius: 0; 
-        }
-
-
-        /* Barra de Título da Janela - Agora é a alça para arrastar */
-        .modal-title-bar {
-            padding: 8px 16px;
-            background-color: #e5e7eb; 
-            border-bottom: 1px solid #d1d5db;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-shrink: 0;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-            cursor: grab; /* Novo cursor para indicar que é arrastável */
-        }
-        #desktop-modal.maximized .modal-title-bar {
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-            cursor: default; /* Cursor padrão quando maximizado */
-        }
-
-        /* Botões de Ação (Fechar/Maximizar/Minimizar) */
-        .modal-controls {
-            display: flex;
-            gap: 8px;
-        }
-        .modal-control-btn {
-            width: 16px; 
-            height: 16px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: transform 0.1s ease;
-            border: none;
-            padding: 0;
-        }
-        .modal-control-btn:hover {
-            transform: scale(1.1);
-        }
-        
-        /* Conteúdo da Janela com Barra de Rolagem Automática */
-        .modal-content-area {
-            flex-grow: 1;
-            padding: 24px;
-            overflow-y: auto; 
-            background-color: white;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Overlay do Modal (Fundo Escuro e Semitransparente) -->
-    <div id="modal-overlay" class="hidden fixed inset-0 bg-black/60 z-30 transition-opacity duration-300"></div>
-
-    <!-- JANELA MODAL PRINCIPAL -->
-    <div id="desktop-modal" class="hidden flex flex-col">
-        
-        <!-- Barra de Título (Alça para arrastar) -->
-        <div class="modal-title-bar">
-            <div class="modal-controls">
-                <!-- Botão Fechar (Vermelho - Implementado com 'X') -->
-                <button id="close-modal-btn" class="modal-control-btn bg-red-500 hover:bg-red-600 flex items-center justify-center" title="Fechar">
-                    <i class="fas fa-times text-white text-[8px]"></i>
-                </button>
-                <!-- Botão Minimizar (Amarelo - Implementado para Minimizar/Restaurar) -->
-                <button id="minimize-modal-btn" class="modal-control-btn bg-yellow-500 hover:bg-yellow-600" title="Minimizar"></button>
-                <!-- Botão Maximizar (Verde - Implementado com ícone de expandir/restaurar) -->
-                <button id="maximize-modal-btn" class="modal-control-btn bg-green-500 hover:bg-green-600 flex items-center justify-center" title="Maximizar">
-                    <i class="fas fa-expand-arrows-alt text-white text-[8px]" id="maximize-icon"></i>
-                </button>
-            </div>
-            <!-- Título da Janela -->
-            <span id="modal-title" class="text-sm font-semibold text-gray-700 select-none"></span>
-            <!-- Espaço para alinhar o título ao centro -->
-            <div class="modal-controls opacity-0 pointer-events-none">
-                 <div class="modal-control-btn bg-red-500"></div>
-                 <div class="modal-control-btn bg-yellow-500"></div>
-                 <div class="modal-control-btn bg-green-500"></div>
-            </div>
-        </div>
-
-        <!-- Área de Conteúdo (Com Rolagem Automática) -->
-        <div id="modal-content-area" class="modal-content-area">
-            <!-- Conteúdo será injetado aqui pelo JavaScript -->
-        </div>
-    </div>
-
-    <!-- Caixa de Mensagem Customizada (Substitui alert() para Dock Items) -->
-    <div id="message-box" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-        <div class="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full text-center">
-            <h3 id="message-title" class="text-xl font-bold mb-3 text-gray-800"></h3>
-            <p id="message-content" class="text-gray-600 mb-5"></p>
-            <button id="close-message" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition">
-                OK
-            </button>
-        </div>
-    </div>
-
-    <!-- Área de Trabalho Principal com Imagem de Fundo -->
-    <div id="desktop-background">
-
-        <!-- Área Central de Conteúdo (Relógio e Ícones) -->
-        <div class="flex-grow flex items-center justify-center w-full p-8">
-            
-            <!-- Container Flexível para Centralizar o Relógio e alinhar Ícones -->
-            <!-- Melhorada Responsividade: Empilha verticalmente no mobile, lado a lado no desktop (sm:) -->
-            <div class="flex flex-col sm:flex-row items-center sm:items-start justify-center w-full max-w-4xl">
-
-                <!-- 2. Relógio Digital Clean e Transparente com Efeito Suave -->
-                <div id="clock-container" class="mx-auto flex flex-col items-center p-8 bg-white/10 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 transition-all duration-300 hover:bg-white/20 ring-4 ring-white/50 ring-offset-4 ring-offset-black/20">
-                    <div id="time" class="text-7xl md:text-9xl font-extrabold text-white tracking-tight drop-shadow-lg transition-all duration-300">
-                        <!-- Hora atualizada pelo JS -->
-                    </div>
-                    <div id="date" class="text-xl md:text-2xl text-white/90 mt-2 font-light drop-shadow-md">
-                        <!-- Data atualizada pelo JS -->
-                    </div>
-                </div>
-
-                <!-- 3. Ícones Grandes Alinhados à Direita do Relógio (COLORIDOS) -->
-                <!-- Melhorada Responsividade: Em linha no mobile (para economizar espaço), em coluna no desktop (sm:) -->
-                <div id="icon-bar" class="flex flex-row sm:flex-col space-x-4 sm:space-x-0 sm:space-y-4 mt-8 sm:ml-10 sm:mt-2">
-                    
-
-                    <!-- Ícone Lira Dutra (AZUL) - Agora abre Modal -->
-                    <button data-title="Lira Dutra" data-icon="fas fa-user-tie" data-type="modal" class="desktop-icon flex flex-col items-center p-3 w-28 h-28 rounded-xl drop-shadow-xl focus:outline-none">
-                        <i class="fas fa-user-tie text-6xl text-blue-400"></i>
-                        <span class="mt-2 text-sm font-semibold text-center leading-tight">Lira Dutra</span>
-                    </button>
-
-                    <!-- Ícone Geografia para Enem (VERDE/TEAL) - Agora abre Modal -->
-                    <button data-title="Geografia para Enem" data-icon="fas fa-globe-americas" data-type="modal" class="desktop-icon flex flex-col items-center p-3 w-28 h-28 rounded-xl drop-shadow-xl focus:outline-none">
-                        <i class="fas fa-globe-americas text-6xl text-teal-400"></i>
-                        <span class="mt-2 text-sm font-semibold text-center leading-tight">Geografia para Enem</span>
-                    </button>
-                    
-                    <!-- Ícone História para Enem (AMARELO/LARANJA) - Agora abre Modal -->
-                    <button data-title="História para Enem" data-icon="fas fa-scroll" data-type="modal" class="desktop-icon flex flex-col items-center p-3 w-28 h-28 rounded-xl drop-shadow-xl focus:outline-none">
-                        <i class="fas fa-scroll text-6xl text-yellow-400"></i>
-                        <span class="mt-2 text-sm font-semibold text-center leading-tight">História para Enem</span>
-                    </button>
-
-                    <!-- Ícone Resumão (ÍNDIGO/ROXO) - Agora abre Modal PDF -->
-                    <button data-title="Resumão" data-icon="fas fa-clipboard-list" data-type="pdf-modal" class="desktop-icon flex flex-col items-center p-3 w-28 h-28 rounded-xl drop-shadow-xl focus:outline-none">
-                        <i class="fas fa-clipboard-list text-6xl text-indigo-400"></i>
-                        <span class="mt-2 text-sm font-semibold text-center leading-tight">Resumão</span>
-                    </button>
-
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. Menu na Parte Inferior (Dock estilo Mac) - ITENS MANTÊM MESSAGE BOX -->
-        <nav id="dock" class="mb-6 p-4 bg-white/30 backdrop-blur-xl rounded-2xl shadow-2xl flex space-x-6 border border-white/40">
-            
-            <!-- Item: Exercícios (VERDE LIMÃO) -->
-            <button data-title="Exercícios" data-icon="fas fa-dumbbell" class="dock-item flex flex-col items-center p-2 rounded-xl">
-                <i class="fas fa-dumbbell text-3xl text-lime-400"></i>
-                <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Exercícios</span>
-            </button>
-            
-            <!-- Item: Vídeos (VERMELHO) -->
-            <button data-title="Vídeos" data-icon="fas fa-film" class="dock-item flex flex-col items-center p-2 rounded-xl">
-                <i class="fas fa-film text-3xl text-red-500"></i>
-                <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Vídeos</span>
-            </button>
-
-            <!-- Item: Podcast (ROSA) -->
-            <button data-title="Podcast" data-icon="fas fa-microphone-alt" class="dock-item flex flex-col items-center p-2 rounded-xl">
-                <i class="fas fa-microphone-alt text-3xl text-pink-500"></i>
-                <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Podcast</span>
-            </button>
-
-            <!-- Item: Mapa Mental (CIANO) -->
-            <button data-title="Mapa Mental" data-icon="fas fa-brain" class="dock-item flex flex-col items-center p-2 rounded-xl">
-                <i class="fas fa-brain text-3xl text-cyan-400"></i>
-                <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Mapa Mental</span>
-            </button>
-            
-            <!-- Item: Infográficos (LARANJA) -->
-            <button data-title="Infográficos" data-icon="fas fa-chart-bar" class="dock-item flex flex-col items-center p-2 rounded-xl">
-                <i class="fas fa-chart-bar text-3xl text-orange-400"></i>
-                <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Infográficos</span>
-            </button>
-            
-            <!-- Item: Sites Amigos (AMARELO) -->
-            <button data-title="Sites Amigos" data-icon="fas fa-link" class="dock-item flex flex-col items-center p-2 rounded-xl">
-                <i class="fas fa-link text-3xl text-yellow-400"></i>
-                <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Sites Amigos</span>
-            </button>
-
-        </nav>
-    </div>
-
-    <script>
-        // Conteúdo para as janelas modais dos ícones do Desktop (Mantido)
-        const modalContents = {
-            'Lira Dutra': `
-                <h2 class="text-2xl font-bold mb-4 text-gray-800">Sobre o Criador e Agente Cultural</h2>
-                <div class="text-lg space-y-4 leading-relaxed text-gray-700">
-                    <p>Sou professor, agente cultural, poeta, artista visual e o criador do programa e canal Vozes da Macaboqueira. Já produzi vários documentários e publiquei 2 livros.</p>
-                    <p>Dentre minhas conquistas, destacam-se a aprovação de diversos projetos nos editais da cultura a nível local e Estadual.</p>
-                    <p class="mt-4 p-3 bg-blue-50 border-l-4 border-blue-500 font-semibold">
-                        Siga no Instagram: <a href="https://www.instagram.com/liradutraoficial" target="_blank" class="text-blue-600 hover:text-blue-800 transition">@liradutraoficial</a>
-                    </p>
-                </div>
-            `,
-            'Geografia para Enem': `
-                <h2 class="text-2xl font-bold mb-4 text-gray-800">Temas Essenciais de Geografia para o ENEM</h2>
-                <p class="mb-4 text-lg text-gray-700">Os principais temas de Geografia para o ENEM são urbanização, agropecuária, questões ambientais, geopolítica e relevo. É fundamental também estudar sobre migrações, globalização, interpretação de mapas, climatologia, hidrografia e o estudo da população e demografia.</p>
-                
-                <h3 class="text-xl font-semibold mt-4 mb-2 text-teal-600">Temas de Destaque</h3>
-                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                    <li><strong>Urbanização:</strong> Crescimento das cidades, problemas como moradia e transporte, e o impacto do crescimento nas cidades brasileiras e globais.</li>
-                    <li><strong>Agropecuária:</strong> Como a agropecuária se organiza no espaço e como se relaciona com a produção de alimentos e com a natureza.</li>
-                    <li><strong>Questões ambientais:</strong> Impactos da ação humana no meio ambiente e como a sociedade busca soluções através de políticas sustentáveis, como energia renovável e acordos internacionais.</li>
-                    <li><strong>Geopolítica:</strong> Relações entre países, acordos, conflitos e o cenário político e econômico global.</li>
-                    <li><strong>Relevo e Geomorfologia:</strong> Formação do relevo, tipos de rochas e os fatores (endógenos e exógenos) que moldam a superfície terrestre, com atenção especial ao Brasil.</li>
-                </ul>
-
-                <h3 class="text-xl font-semibold mt-4 mb-2 text-teal-600">Outros Temas Importantes</h3>
-                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                    <li><strong>Migrações:</strong> Os fatores que levam as pessoas a se deslocar e as consequências desse processo.</li>
-                    <li><strong>Globalização e desenvolvimento técnico-científico:</strong> O impacto da globalização na economia e na sociedade.</li>
-                    <li><strong>Interpretação de mapas:</strong> Habilidade de ler e analisar informações contidas em mapas.</li>
-                    <li><strong>Climatologia:</strong> Os diferentes tipos de clima, seus fatores e impactos.</li>
-                    <li><strong>Hidrografia:</strong> O estudo das águas e recursos hídricos.</li>
-                    <li><strong>População e demografia:</strong> Distribuição, crescimento e outras características da população.</li>
-                </ul>
-            `,
-            'História para Enem': `
-                <h2 class="text-2xl font-bold mb-4 text-gray-800">Temas Essenciais de História para o ENEM</h2>
-                <p class="mb-4 text-lg text-gray-700">Os principais temas de História para o ENEM são a História do Brasil Colonial e Imperial (com ênfase na escravidão, abolição e segundo reinado), a Primeira República e a Era Vargas (direitos trabalhistas, industrialização e Ditadura do Estado Novo) e a Ditadura Militar no Brasil.</p>
-                <p class="mb-4 text-lg text-gray-700">Na História Geral, o Iluminismo, a Revolução Industrial e os eventos do século XX, como a Primeira e Segunda Guerras Mundiais e a Guerra Fria, também são recorrentes.</p>
-                
-                <h3 class="text-xl font-semibold mt-4 mb-2 text-yellow-600">História do Brasil</h3>
-                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                    <li><strong>Brasil Colonial e Imperial:</strong> A escravidão, o processo de abolição, a abolição da escravatura e os movimentos abolicionistas são temas centrais. O Segundo Reinado e o ciclo do café também são muito cobrados.</li>
-                    <li><strong>Primeira República:</strong> A República Velha e seus desdobramentos são frequentemente abordados.</li>
-                    <li><strong>Era Vargas:</strong> Estude os direitos trabalhistas, o processo de industrialização, a Era Vargas como um todo e a Ditadura do Estado Novo.</li>
-                    <li><strong>Ditadura Militar:</strong> Questões sobre o regime militar e a luta por democracia são importantes.</li>
-                </ul>
-
-                <h3 class="text-xl font-semibold mt-4 mb-2 text-yellow-600">História Geral</h3>
-                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                    <li><strong>Antiguidade Clássica:</strong> A Grécia Antiga e a democracia ateniense são temas importantes, assim como Roma e a sua influência.</li>
-                    <li><strong>Idade Moderna e Contemporânea:</strong> O Iluminismo, as Revoluções Burguesas, a Revolução Industrial e o Absolutismo são temas essenciais.</li>
-                    <li><strong>Século XX:</strong> A Primeira e Segunda Guerras Mundiais, a Guerra Fria, o Holocausto e os movimentos sociais são recorrentes.</li>
-                </ul>
-            `,
-            'Resumão': `
-                <h2 class="text-2xl font-bold mb-4 text-gray-800">Resumo de Geografia e História (PDF)</h2>
-                <p class="mb-4 text-lg text-gray-700">Visualize o Resumão de Geografia e História diretamente abaixo. Utilize a barra de rolagem para navegar pelo documento.</p>
-                <!-- O iFrame precisa de altura total para ser visualizado dentro da área de rolagem da modal -->
-                <div class="flex-grow h-full min-h-[500px]"> 
-                    <iframe src="https://macaboqueira.github.io/enem/resumao_geoh.pdf" class="w-full h-full border rounded-lg shadow-inner" frameborder="0">
-                        Seu navegador não suporta iFrames, <a href="https://macaboqueira.github.io/enem/resumao_geoh.pdf" target="_blank" class="text-blue-500">clique aqui para abrir o PDF</a>.
-                    </iframe>
-                </div>
-            `
-        };
-
-
-        // --- Variáveis de Estado da Janela ---
-        let currentOpenTitle = null; 
-        let isMinimized = false;     
-
-        // --- Variáveis para Arrastar (Draggable) ---
-        let isDragging = false;
-        let dragOffsetX = 0, dragOffsetY = 0;
-        const modal = document.getElementById('desktop-modal');
-        const modalTitleBar = document.querySelector('.modal-title-bar');
-
-
-        // Função para exibir mensagens customizadas (substitui alert() para Dock Items)
-        function showMessage(title, message) {
-            const messageBox = document.getElementById('message-box');
-            document.getElementById('message-title').textContent = title;
-            document.getElementById('message-content').textContent = message;
-            messageBox.classList.remove('hidden');
-        }
-
-        // Função para fechar a caixa de mensagem do Dock
-        document.getElementById('close-message').addEventListener('click', () => {
-            document.getElementById('message-box').classList.add('hidden');
-        });
-
-        // --- Funções da Janela Modal ---
-
-        // Implementação do Minimizar (Botão Amarelo)
-        function minimizeDesktopModal() {
-            if (modal.classList.contains('hidden')) return; 
-
-            modal.classList.add('hidden');
-            document.getElementById('modal-overlay').classList.add('hidden');
-            isMinimized = true;
-        }
-
-        // Função para fechar a Janela Modal do Desktop (Botão Vermelho)
-        function closeDesktopModal() {
-            // Garante que o modal esteja no estado "restaurado" antes de fechar
-            modal.classList.remove('maximized');
-            document.getElementById('maximize-icon').classList.remove('fa-compress-arrows-alt');
-            document.getElementById('maximize-icon').classList.add('fa-expand-arrows-alt');
-            document.getElementById('maximize-modal-btn').title = "Maximizar";
-
-            modal.classList.add('hidden');
-            document.getElementById('modal-overlay').classList.add('hidden');
-            
-            // Limpa os estados
-            document.getElementById('modal-content-area').innerHTML = ''; 
-            currentOpenTitle = null;
-            isMinimized = false;
-            
-            // Reseta a posição para o centro da tela (importante para drag and drop)
-            modal.style.top = '50%';
-            modal.style.left = '50%';
-            modal.style.transform = 'translate(-50%, -50%)';
-        }
-
-        // Função para abrir ou restaurar a Janela Modal do Desktop
-        function openDesktopModal(title, htmlContent) {
-            // Se estiver minimizada E o mesmo item for clicado, RESTAURA
-            if (isMinimized && currentOpenTitle === title) {
-                modal.classList.remove('hidden');
-                document.getElementById('modal-overlay').classList.remove('hidden');
-                isMinimized = false;
-            } else if (currentOpenTitle === title && !modal.classList.contains('hidden')) {
-                // Já está aberta, ignora
-                return;
-            } else {
-                // Abre um novo conteúdo
-                document.getElementById('modal-title').textContent = title;
-                document.getElementById('modal-content-area').innerHTML = htmlContent;
-                document.getElementById('modal-overlay').classList.remove('hidden');
-                modal.classList.remove('hidden');
-                currentOpenTitle = title;
-                isMinimized = false; 
-                
-                // Reseta o estado de maximização
-                modal.classList.remove('maximized');
-                document.getElementById('maximize-icon').classList.remove('fa-compress-arrows-alt');
-                document.getElementById('maximize-icon').classList.add('fa-expand-arrows-alt');
-                document.getElementById('maximize-modal-btn').title = "Maximizar";
-
-                // Reseta a posição para o centro da tela
-                modal.style.top = '50%';
-                modal.style.left = '50%';
-                modal.style.transform = 'translate(-50%, -50%)';
-            }
-        }
-
-        // Função para alternar o estado de maximização da Janela Modal (Botão Verde)
-        function toggleMaximize() {
-            modal.classList.toggle('maximized');
-
-            if (modal.classList.contains('maximized')) {
-                // Estado maximizado: desabilita o arrastar e reseta a posição
-                modalTitleBar.style.cursor = 'default';
-                
-                // Assegura que o modal fique no canto superior esquerdo
-                modal.style.transition = 'all 0.3s ease'; 
-                modal.style.top = '0';
-                modal.style.left = '0';
-                modal.style.transform = 'none';
-
-                document.getElementById('maximize-icon').classList.remove('fa-expand-arrows-alt');
-                document.getElementById('maximize-icon').classList.add('fa-compress-arrows-alt');
-                document.getElementById('maximize-modal-btn').title = "Restaurar";
-            } else {
-                // Estado normal: permite arrastar e centraliza
-                modalTitleBar.style.cursor = 'grab';
-
-                // Restaura a posição centralizada (ou a última posição arrastada)
-                modal.style.transition = 'all 0.3s ease'; 
-                modal.style.top = '50%';
-                modal.style.left = '50%';
-                modal.style.transform = 'translate(-50%, -50%)';
-
-                document.getElementById('maximize-icon').classList.remove('fa-compress-arrows-alt');
-                document.getElementById('maximize-icon').classList.add('fa-expand-arrows-alt');
-                document.getElementById('maximize-modal-btn').title = "Maximizar";
-            }
-        }
-
-        // --- Draggable Logic ---
-
-        function dragStart(e) {
-            // Não permite arrastar se estiver maximizada ou se for um clique nos botões de controle
-            if (modal.classList.contains('maximized') || e.target.closest('.modal-controls')) return;
-            
-            isDragging = true;
-            // Posição inicial do mouse/toque
-            const clientX = e.clientX || e.touches[0].clientX;
-            const clientY = e.clientY || e.touches[0].clientY;
-
-            // Calcula o deslocamento (offset) do clique em relação ao modal
-            const modalRect = modal.getBoundingClientRect();
-            dragOffsetX = clientX - modalRect.left;
-            dragOffsetY = clientY - modalRect.top;
-
-            // Estilos para dragging
-            modalTitleBar.style.cursor = 'grabbing';
-            modal.style.transition = 'none'; // Desativa transição para arrasto suave
-            modal.style.zIndex = 50; // Traz para frente de outros elementos (opcional, mas bom)
-        }
-
-        function drag(e) {
-            if (!isDragging) return;
-            
-            e.preventDefault(); 
-            
-            const clientX = e.clientX || e.touches[0].clientX;
-            const clientY = e.clientY || e.touches[0].clientY;
-
-            // Calcula a nova posição do modal
-            let newLeft = clientX - dragOffsetX;
-            let newTop = clientY - dragOffsetY;
-
-            // Aplica a nova posição (usa left/top em pixels e remove o transform: translate centralizado)
-            modal.style.left = `${newLeft}px`;
-            modal.style.top = `${newTop}px`;
-            modal.style.transform = 'none'; // Remove a centralização
-        }
-
-        function dragEnd() {
-            if (!isDragging) return;
-            isDragging = false;
-            modalTitleBar.style.cursor = 'grab'; 
-            modal.style.transition = 'all 0.3s ease'; // Reativa a transição
-            modal.style.zIndex = 40;
-        }
-
-        /**
-         * Atualiza o relógio digital e a data.
-         */
-        function updateClock() {
-            const now = new Date();
-
-            // Formatação da Hora (exemplo: 14:30)
-            const timeOptions = { hour: '2-digit', minute: '2-digit' };
-            const timeString = now.toLocaleTimeString('pt-BR', timeOptions);
-
-            // Formatação da Data (exemplo: Segunda-feira, 06 de Novembro de 2025)
-            const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-            let dateString = now.toLocaleDateString('pt-BR', dateOptions);
-
-            // Capitaliza a primeira letra do dia da semana
-            dateString = dateString.charAt(0).toUpperCase() + dateString.slice(1);
-
-            document.getElementById('date').textContent = dateString;
-
-            // Lógica para fazer o separador (:) piscar
-            const seconds = now.getSeconds();
-            const opacity = seconds % 2 === 0 ? 'opacity-100' : 'opacity-40';
-            
-            // Reconstroi a string da hora, envolvendo o ':' com a opacidade
-            const formattedTimeString = timeString.replace(':', `<span class="${opacity} transition-opacity duration-500">:</span>`);
-            
-            document.getElementById('time').innerHTML = formattedTimeString;
-        }
-
-        // Inicializa a aplicação quando a página estiver totalmente carregada
-        window.onload = function() {
-            // 1. Inicializa o relógio
-            updateClock();
-            setInterval(updateClock, 1000);
-
-            // 2. Adiciona listeners para os botões da modal
-            document.getElementById('close-modal-btn').addEventListener('click', closeDesktopModal);
-            document.getElementById('modal-overlay').addEventListener('click', closeDesktopModal);
-            document.getElementById('maximize-modal-btn').addEventListener('click', toggleMaximize);
-            document.getElementById('minimize-modal-btn').addEventListener('click', minimizeDesktopModal); // Novo listener para Minimizar
-
-
-            // 3. Adiciona listeners para o Draggable (Mouse e Touch)
-            modalTitleBar.addEventListener('mousedown', dragStart);
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', dragEnd);
-
-            modalTitleBar.addEventListener('touchstart', dragStart);
-            document.addEventListener('touchmove', drag);
-            document.addEventListener('touchend', dragEnd);
-
-
-            // 4. Adiciona listeners de clique para os Ícones da Área de Trabalho (Abre/Restaura Modal)
-            document.querySelectorAll('.desktop-icon').forEach(icon => {
-                icon.addEventListener('click', (e) => {
                     const title = e.currentTarget.getAttribute('data-title');
                     const type = e.currentTarget.getAttribute('data-type');
-                    
-                    if (type === 'modal' || type === 'pdf-modal') {
-                        // Se o modal estiver minimizado e o mesmo ícone for clicado, ele restaura.
-                        // Se for outro ícone, ele abre.
-                        openDesktopModal(title, modalContents[title]);
-                    } else {
-                        showMessage(`Abrir ${title}`, `A aplicação "${title}" está sendo iniciada...`);
-                    }
-                });
-            });
+                    const url = e.currentTarget.getAttribute('data-url');
 
-            // 5. Adiciona listeners de clique para os Itens do Dock (mantém o showMessage e o feedback visual CSS)
-            document.querySelectorAll('.dock-item').forEach(item => {
-                item.addEventListener('click', (e) => {
-                    const title = e.currentTarget.getAttribute('data-title');
-                    showMessage(`Abrir Recurso`, `O recurso "${title}" foi acessado. (Em breve teremos o app completo!)`);
+                    if (type === 'external-link' && url) {
+                        // Abrir link externo em nova aba
+                        window.open(url, '_blank');
+                    } else {
+                        // Comportamento interno ou mensagem de placeholder (Não deve ser mais usado, mas mantido como fallback)
+                        showMessage(`Abrir Recurso`, `O recurso "${title}" foi acessado. (Em breve teremos o app completo!)`);
+                    }
                 });
             });
         };
