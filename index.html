@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desktop ENEM</title>
+    <!-- Carrega Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carrega Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        // Configuração customizada do Tailwind para usar a fonte Inter
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilo base para garantir o layout de tela cheia */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Estilo da imagem de fundo - Usando o link RAW do Github para garantir o carregamento */
+        #desktop-background {
+            background-image: url('https://raw.githubusercontent.com/macaboqueira/enem/main/fundotela.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Efeito de zoom/elevação no Dock (Estilo Mac) */
+        .dock-item {
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+        .dock-item:hover {
+            transform: translateY(-10px) scale(1.15);
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Estilo para ícones grandes e clicáveis */
+        .desktop-icon {
+            transition: background-color 0.15s ease-in-out, transform 0.1s ease-in-out;
+            cursor: pointer;
+        }
+        .desktop-icon:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .desktop-icon:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Caixa de Mensagem Customizada (Substitui alert()) -->
+    <div id="message-box" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full text-center">
+            <h3 id="message-title" class="text-xl font-bold mb-3 text-gray-800"></h3>
+            <p id="message-content" class="text-gray-600 mb-5"></p>
+            <button id="close-message" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <!-- Área de Trabalho Principal com Imagem de Fundo -->
+    <div id="desktop-background">
+
+        <!-- Área Central de Conteúdo (Relógio e Ícones) -->
+        <div class="flex-grow flex items-center justify-center w-full p-8">
+            
+            <!-- Container Flexível para Centralizar o Relógio e alinhar Ícones -->
+            <div class="flex items-start justify-center w-full max-w-4xl">
+
+                <!-- 2. Relógio Digital Clean e Transparente -->
+                <div id="clock-container" class="mx-auto flex flex-col items-center p-8 bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 transition-all duration-300 hover:bg-white/20">
+                    <div id="time" class="text-7xl md:text-9xl font-extrabold text-white tracking-tight drop-shadow-lg transition-all duration-300">
+                        <!-- Hora atualizada pelo JS -->
+                    </div>
+                    <div id="date" class="text-xl md:text-2xl text-white/90 mt-2 font-light drop-shadow-md">
+                        <!-- Data atualizada pelo JS -->
+                    </div>
+                </div>
+
+                <!-- 3. Ícones Grandes Alinhados à Direita do Relógio -->
+                <div id="icon-bar" class="flex flex-col space-y-4 ml-10 mt-2">
+                    
+                    <!-- Ícone Lira Dutra -->
+                    <button data-title="Lira Dutra" data-icon="fas fa-user-tie" class="desktop-icon flex flex-col items-center p-3 w-28 h-28 rounded-xl text-white drop-shadow-xl focus:outline-none">
+                        <i class="fas fa-user-tie text-6xl"></i>
+                        <span class="mt-2 text-sm font-semibold text-center leading-tight">Lira Dutra</span>
+                    </button>
+
+                    <!-- Ícone Geografia para Enem -->
+                    <button data-title="Geografia para Enem" data-icon="fas fa-globe-americas" class="desktop-icon flex flex-col items-center p-3 w-28 h-28 rounded-xl text-white drop-shadow-xl focus:outline-none">
+                        <i class="fas fa-globe-americas text-6xl"></i>
+                        <span class="mt-2 text-sm font-semibold text-center leading-tight">Geografia para Enem</span>
+                    </button>
+                    
+                    <!-- Ícone História para Enem -->
+                    <button data-title="História para Enem" data-icon="fas fa-scroll" class="desktop-icon flex flex-col items-center p-3 w-28 h-28 rounded-xl text-white drop-shadow-xl focus:outline-none">
+                        <i class="fas fa-scroll text-6xl"></i>
+                        <span class="mt-2 text-sm font-semibold text-center leading-tight">História para Enem</span>
+                    </button>
+
+                    <!-- Ícone Resumão -->
+                    <button data-title="Resumão" data-icon="fas fa-clipboard-list" class="desktop-icon flex flex-col items-center p-3 w-28 h-28 rounded-xl text-white drop-shadow-xl focus:outline-none">
+                        <i class="fas fa-clipboard-list text-6xl"></i>
+                        <span class="mt-2 text-sm font-semibold text-center leading-tight">Resumão</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Menu na Parte Inferior (Dock estilo Mac) -->
+        <nav id="dock" class="mb-6 p-4 bg-white/30 backdrop-blur-xl rounded-2xl shadow-2xl flex space-x-6 border border-white/40">
+            
+            <!-- Item: Vídeos de Geografia -->
+            <button data-title="Vídeos de Geografia" data-icon="fas fa-map" class="dock-item flex flex-col items-center text-white p-2 rounded-xl">
+                <i class="fas fa-map text-3xl"></i>
+                <span class="text-xs mt-1 font-medium hidden sm:block">Geografia</span>
+            </button>
+
+            <!-- Item: Vídeo de História -->
+            <button data-title="Vídeos de História" data-icon="fas fa-landmark" class="dock-item flex flex-col items-center text-white p-2 rounded-xl">
+                <i class="fas fa-landmark text-3xl"></i>
+                <span class="text-xs mt-1 font-medium hidden sm:block">História</span>
+            </button>
+
+            <!-- Item: E-book -->
+            <button data-title="E-book" data-icon="fas fa-book-open" class="dock-item flex flex-col items-center text-white p-2 rounded-xl">
+                <i class="fas fa-book-open text-3xl"></i>
+                <span class="text-xs mt-1 font-medium hidden sm:block">E-book</span>
+            </button>
+        </nav>
+    </div>
+
+    <script>
+        // Função para exibir mensagens customizadas (substitui alert())
+        function showMessage(title, message) {
+            const messageBox = document.getElementById('message-box');
+            document.getElementById('message-title').textContent = title;
+            document.getElementById('message-content').textContent = message;
+            messageBox.classList.remove('hidden');
+        }
+
+        // Fecha a caixa de mensagem ao clicar no botão OK
+        document.getElementById('close-message').addEventListener('click', () => {
+            document.getElementById('message-box').classList.add('hidden');
+        });
+
+
+        /**
+         * Atualiza o relógio digital e a data.
+         * Garante que o separador de segundos pisque para dar destaque.
+         */
+        function updateClock() {
+            const now = new Date();
+
+            // Formatação da Hora (exemplo: 14:30)
+            const timeOptions = { hour: '2-digit', minute: '2-digit' };
+            const timeString = now.toLocaleTimeString('pt-BR', timeOptions);
+
+            // Formatação da Data (exemplo: Segunda-feira, 06 de Novembro de 2025)
+            const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            // toLocaleDateString é usado para garantir a formatação correta em Português
+            let dateString = now.toLocaleDateString('pt-BR', dateOptions);
+
+            // Capitaliza a primeira letra do dia da semana
+            dateString = dateString.charAt(0).toUpperCase() + dateString.slice(1);
+
+            document.getElementById('date').textContent = dateString;
+
+            // Lógica para fazer o separador (:) piscar, dando destaque à hora
+            const seconds = now.getSeconds();
+            const opacity = seconds % 2 === 0 ? 'opacity-100' : 'opacity-40';
+            
+            // Reconstroi a string da hora, envolvendo o ':' com a opacidade
+            const formattedTimeString = timeString.replace(':', `<span class="${opacity} transition-opacity duration-500">:</span>`);
+            
+            document.getElementById('time').innerHTML = formattedTimeString;
+        }
+
+        // Inicializa a aplicação quando a página estiver totalmente carregada
+        window.onload = function() {
+            // 1. Inicializa o relógio
+            updateClock();
+            // Atualiza o relógio a cada 1 segundo
+            setInterval(updateClock, 1000);
+
+            // 2. Adiciona listeners de clique para os Ícones da Área de Trabalho
+            document.querySelectorAll('.desktop-icon').forEach(icon => {
+                icon.addEventListener('click', (e) => {
+                    const title = e.currentTarget.getAttribute('data-title');
+                    showMessage(`Abrir ${title}`, `A aplicação "${title}" está sendo iniciada...`);
+                });
+            });
+
+            // 3. Adiciona listeners de clique para os Itens do Dock
+            document.querySelectorAll('.dock-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const title = e.currentTarget.getAttribute('data-title');
+                    showMessage(`Abrir Recurso`, `O recurso "${title}" foi acessado.`);
+                });
+            });
+        };
+    </script>
+</body>
+</html>
