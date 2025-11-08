@@ -60,7 +60,6 @@
             transform: translateY(-5px) scale(1.05);
         }
 
-
         /* Estilo para ícones grandes e clicáveis */
         .desktop-icon {
             transition: background-color 0.15s ease-in-out, transform 0.1s ease-in-out;
@@ -84,7 +83,7 @@
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(0.9);
             width: 90%;
             max-width: 800px;
             height: 80%;
@@ -94,7 +93,16 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             z-index: 40;
             transition: all 0.3s ease; /* Transição para Maximizar/Restaurar */
-            overflow: hidden; 
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        /* Estado visível da modal com efeito de surgir */
+        #desktop-modal.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
         }
         
         /* Estilo para a janela maximizada (tela cheia) */
@@ -108,7 +116,6 @@
             transform: none !important; /* Remove a translação */
             border-radius: 0; 
         }
-
 
         /* Barra de Título da Janela - Agora é a alça para arrastar */
         .modal-title-bar {
@@ -154,6 +161,315 @@
             overflow-y: auto; 
             background-color: white;
         }
+        
+        /* Estilo para imagens responsivas nos modais */
+        .modal-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        /* Estilo para o dock em telas pequenas */
+        @media (max-width: 640px) {
+            #dock {
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+            #dock::-webkit-scrollbar {
+                height: 4px;
+            }
+            #dock::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 2px;
+            }
+        }
+        
+        /* Efeito durante o arrasto */
+        .dragging {
+            transform: scale(0.98);
+            opacity: 0.9;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+        }
+        
+        /* Estilos para as ferramentas interativas */
+        .interactive-toolbar {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background: #f1f5f9;
+            border-bottom: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+        }
+        
+        .tool-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        
+        .tool-btn:hover {
+            background: #f8fafc;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tool-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #2563eb;
+        }
+        
+        .highlight-yellow {
+            background-color: rgba(255, 255, 0, 0.4);
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
+        .highlight-pink {
+            background-color: rgba(255, 182, 193, 0.4);
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
+        .highlight-blue {
+            background-color: rgba(173, 216, 230, 0.4);
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
+        .highlight-green {
+            background-color: rgba(144, 238, 144, 0.4);
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
+        .text-annotation {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .text-annotation::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: currentColor;
+            opacity: 0.7;
+        }
+        
+        .sticky-note {
+            background: #fff9c4;
+            border-left: 4px solid #ffd54f;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .flashcard {
+            perspective: 1000px;
+            margin: 15px 0;
+        }
+        
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .flashcard-front {
+            background: #4f46e5;
+            color: white;
+        }
+        
+        .flashcard-back {
+            background: white;
+            color: #1f2937;
+            transform: rotateY(180deg);
+            border: 1px solid #e5e7eb;
+        }
+        
+        .quiz-option {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .quiz-option:hover {
+            background: #f3f4f6;
+        }
+        
+        .quiz-option.correct {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+        
+        .quiz-option.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        
+        /* Estilos para a biografia do Lira Dutra */
+        .profile-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            color: white;
+        }
+        
+        .profile-header {
+            padding: 30px 30px 20px;
+            text-align: center;
+            background: rgba(0,0,0,0.1);
+        }
+        
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid rgba(255,255,255,0.3);
+            object-fit: cover;
+            margin: 0 auto 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .profile-name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .profile-title {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .profile-badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .profile-content {
+            padding: 25px 30px;
+            background: white;
+            color: #333;
+        }
+        
+        .profile-section {
+            margin-bottom: 25px;
+        }
+        
+        .profile-section h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .profile-section p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #4f46e5;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: #3b3bff;
+        }
+        
+        .achievement-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .achievement-item {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #4f46e5;
+        }
+        
+        .achievement-item h4 {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #1e293b;
+        }
+        
+        .achievement-item p {
+            font-size: 14px;
+            color: #64748b;
+        }
     </style>
 </head>
 <body>
@@ -162,7 +478,7 @@
     <div id="modal-overlay" class="hidden fixed inset-0 bg-black/60 z-30 transition-opacity duration-300"></div>
 
     <!-- JANELA MODAL PRINCIPAL -->
-    <div id="desktop-modal" class="hidden flex flex-col">
+    <div id="desktop-modal" class="flex flex-col">
         
         <!-- Barra de Título (Alça para arrastar) -->
         <div class="modal-title-bar">
@@ -188,6 +504,35 @@
             </div>
         </div>
 
+        <!-- Barra de Ferramentas Interativas -->
+        <div id="interactive-toolbar" class="interactive-toolbar hidden">
+            <div class="flex items-center gap-2">
+                <span class="text-sm font-medium text-gray-700">Ferramentas:</span>
+                <button id="highlighter-btn" class="tool-btn" data-color="yellow" title="Marcador Amarelo">
+                    <i class="fas fa-highlighter text-yellow-500"></i>
+                    <span>Marcador</span>
+                </button>
+                <div class="flex gap-1">
+                    <button class="tool-btn color-option bg-yellow-300 w-6 h-6 rounded-full" data-color="yellow" title="Amarelo"></button>
+                    <button class="tool-btn color-option bg-pink-300 w-6 h-6 rounded-full" data-color="pink" title="Rosa"></button>
+                    <button class="tool-btn color-option bg-blue-300 w-6 h-6 rounded-full" data-color="blue" title="Azul"></button>
+                    <button class="tool-btn color-option bg-green-300 w-6 h-6 rounded-full" data-color="green" title="Verde"></button>
+                </div>
+                <button id="underline-btn" class="tool-btn" title="Sublinhar">
+                    <i class="fas fa-underline text-blue-500"></i>
+                    <span>Sublinhar</span>
+                </button>
+                <button id="note-btn" class="tool-btn" title="Adicionar Nota">
+                    <i class="fas fa-sticky-note text-amber-500"></i>
+                    <span>Nota</span>
+                </button>
+                <button id="clear-btn" class="tool-btn" title="Limpar Anotações">
+                    <i class="fas fa-eraser text-red-500"></i>
+                    <span>Limpar</span>
+                </button>
+            </div>
+        </div>
+
         <!-- Área de Conteúdo (Com Rolagem Automática) -->
         <div id="modal-content-area" class="modal-content-area">
             <!-- Conteúdo será injetado aqui pelo JavaScript -->
@@ -209,49 +554,48 @@
     <div id="desktop-background">
 
         <!-- Área Central de Conteúdo (Relógio e Ícones) -->
-        <div class="flex-grow flex items-center justify-center w-full p-8">
+        <div class="flex-grow flex items-center justify-center w-full p-4 sm:p-8">
             
             <!-- Container Flexível para Centralizar o Relógio e alinhar Ícones -->
             <!-- Melhorada Responsividade: Empilha verticalmente no mobile, lado a lado no desktop (sm:) -->
-            <div class="flex flex-col sm:flex-row items-center sm:items-start justify-center w-full max-w-4xl">
+            <div class="flex flex-col lg:flex-row items-center justify-center w-full max-w-4xl gap-4 lg:gap-8">
 
                 <!-- 2. Relógio Digital Clean e Transparente com Efeito Suave -->
-                <div id="clock-container" class="mx-auto flex flex-col items-center p-8 bg-white/10 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 transition-all duration-300 hover:bg-white/20 ring-4 ring-white/50 ring-offset-4 ring-offset-black/20">
-                    <div id="time" class="text-7xl md:text-9xl font-extrabold text-white tracking-tight drop-shadow-lg transition-all duration-300">
+                <div id="clock-container" class="flex flex-col items-center p-4 sm:p-8 bg-white/10 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 transition-all duration-300 hover:bg-white/20 ring-2 sm:ring-4 ring-white/50 ring-offset-2 sm:ring-offset-4 ring-offset-black/20 w-full max-w-md">
+                    <div id="time" class="text-5xl sm:text-7xl md:text-9xl font-extrabold text-white tracking-tight drop-shadow-lg transition-all duration-300">
                         <!-- Hora atualizada pelo JS -->
                     </div>
-                    <div id="date" class="text-xl md:text-2xl text-white/90 mt-2 font-light drop-shadow-md">
+                    <div id="date" class="text-lg sm:text-xl md:text-2xl text-white/90 mt-2 font-light drop-shadow-md text-center">
                         <!-- Data atualizada pelo JS -->
                     </div>
                 </div>
 
                 <!-- 3. Ícones Grandes Alinhados à Direita do Relógio (COLORIDOS) -->
                 <!-- Melhorada Responsividade: Em linha no mobile (para economizar espaço), em coluna no desktop (sm:) -->
-                <div id="icon-bar" class="flex flex-row sm:flex-col space-x-4 sm:space-x-0 sm:space-y-4 mt-8 sm:ml-10 sm:mt-2">
+                <div id="icon-bar" class="grid grid-cols-2 sm:flex sm:flex-col gap-4 sm:gap-6">
                     
-                 
                     <!-- Ícone Geografia para Enem (VERDE/TEAL) - Agora abre Modal -->
-                    <button data-title="Geografia para Enem" data-icon="fas fa-map-location-dot" data-type="modal" class="desktop-icon flex flex-col items-center p-3 w-28 h-28 rounded-xl drop-shadow-xl focus:outline-none">
-                        <i c<i class="fas fa-map-location-dot text-6xl text-green-400"></i>
-                        <span class="mt-2 text-sm font-semibold text-center leading-tight">Geografia para Enem</span>
+                    <button data-title="Geografia para Enem" data-icon="fas fa-map-location-dot" data-type="modal" class="desktop-icon flex flex-col items-center p-3 w-24 h-24 sm:w-28 sm:h-28 rounded-xl drop-shadow-xl focus:outline-none">
+                        <i class="fas fa-map-location-dot text-4xl sm:text-6xl text-teal-400"></i>
+                        <span class="mt-2 text-xs sm:text-sm font-semibold text-center leading-tight">Geografia para Enem</span>
                     </button>
                     
                     <!-- Ícone História para Enem (AMARELO/LARANJA) - Agora abre Modal -->
-                    <button data-title="História para Enem" data-icon="fas fa-solid fa-hourglass-half" data-type="modal" class="desktop-icon flex flex-col items-center p-3 w-28 h-28 rounded-xl drop-shadow-xl focus:outline-none">
-                        <i class="fas fa-solid fa-hourglass-half text-6xl text-yellow-400"></i>
-                        <span class="mt-2 text-sm font-semibold text-center leading-tight">História para Enem</span>
+                    <button data-title="História para Enem" data-icon="fas fa-solid fa-hourglass-half" data-type="modal" class="desktop-icon flex flex-col items-center p-3 w-24 h-24 sm:w-28 sm:h-28 rounded-xl drop-shadow-xl focus:outline-none">
+                        <i class="fas fa-solid fa-hourglass-half text-4xl sm:text-6xl text-yellow-400"></i>
+                        <span class="mt-2 text-xs sm:text-sm font-semibold text-center leading-tight">História para Enem</span>
                     </button>
 
                     <!-- Ícone Resumão (ÍNDIGO/ROXO) - Agora abre Modal PDF -->
-                    <button data-title="Resumão" data-icon="fas fa-clipboard-list" data-type="pdf-modal" class="desktop-icon flex flex-col items-center p-3 w-28 h-28 rounded-xl drop-shadow-xl focus:outline-none">
-                        <i class="fas fa-clipboard-list text-6xl text-green-400"></i>
-                        <span class="mt-2 text-sm font-semibold text-center leading-tight">Resumão da Salvação</span>
+                    <button data-title="Resumão" data-icon="fas fa-clipboard-list" data-type="pdf-modal" class="desktop-icon flex flex-col items-center p-3 w-24 h-24 sm:w-28 sm:h-28 rounded-xl drop-shadow-xl focus:outline-none">
+                        <i class="fas fa-clipboard-list text-4xl sm:text-6xl text-indigo-400"></i>
+                        <span class="mt-2 text-xs sm:text-sm font-semibold text-center leading-tight">Resumão da Salvação</span>
                     </button>
 
                        <!-- Ícone Lira Dutra (AZUL) - Agora abre Modal -->
-                    <button data-title="Lira Dutra" data-icon="fas fa-regular fa-newspaper" data-type="modal" class="desktop-icon flex flex-col items-center p-3 w-28 h-28 rounded-xl drop-shadow-xl focus:outline-none">
-                        <i class="fas fa-regular fa-newspaper text-6xl text-yellow-400"></i>
-                        <span class="mt-2 text-sm font-semibold text-center leading-tight">Créditos</span>
+                    <button data-title="Lira Dutra" data-icon="fas fa-solid fa-user-check" data-type="modal" class="desktop-icon flex flex-col items-center p-3 w-24 h-24 sm:w-28 sm:h-28 rounded-xl drop-shadow-xl focus:outline-none">
+                        <i class="fas fa-solid fa-user-check text-4xl sm:text-6xl text-yellow-400"></i>
+                        <span class="mt-2 text-xs sm:text-sm font-semibold text-center leading-tight">Créditos</span>
                     </button>
                     
                 </div>
@@ -259,35 +603,35 @@
         </div>
 
         <!-- 4. Menu na Parte Inferior (Dock estilo Mac) - AGORA TUDO SÃO LINKS EXTERNOS -->
-        <nav id="dock" class="mb-6 p-4 bg-white/30 backdrop-blur-xl rounded-2xl shadow-2xl flex space-x-6 border border-white/40">
+        <nav id="dock" class="mb-4 sm:mb-6 p-3 sm:p-4 bg-white/30 backdrop-blur-xl rounded-2xl shadow-2xl flex space-x-4 sm:space-x-6 border border-white/40 overflow-x-auto">
             
             <!-- Item: Exercícios (VERDE LIMÃO) - Atualizado para Link Externo -->
-            <button data-title="Exercícios" data-icon="fas fa-dumbbell" data-type="external-link" data-url="https://www.todamateria.com.br/exercicios" class="dock-item flex flex-col items-center p-2 rounded-xl">
-                <i class="fas fa-dumbbell text-3xl text-lime-400"></i>
+            <button data-title="Exercícios" data-icon="fas fa-dumbbell" data-type="external-link" data-url="https://www.todamateria.com.br/exercicios" class="dock-item flex flex-col items-center p-2 rounded-xl flex-shrink-0">
+                <i class="fas fa-dumbbell text-2xl sm:text-3xl text-lime-400"></i>
                 <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Exercícios</span>
             </button>
             
             <!-- Item: Vídeos (VERMELHO) - Atualizado para Link Externo -->
-            <button data-title="Vídeos" data-icon="fas fa-film" data-type="external-link" data-url="https://enemnarede.seduc.ce.gov.br/curso/9/" class="dock-item flex flex-col items-center p-2 rounded-xl">
-                <i class="fas fa-film text-3xl text-red-500"></i>
+            <button data-title="Vídeos" data-icon="fas fa-film" data-type="external-link" data-url="https://enemnarede.seduc.ce.gov.br/curso/9/" class="dock-item flex flex-col items-center p-2 rounded-xl flex-shrink-0">
+                <i class="fas fa-film text-2xl sm:text-3xl text-red-500"></i>
                 <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Vídeos</span>
             </button>
 
             <!-- Item: Podcast (ROSA) - Atualizado para Link Externo -->
-            <button data-title="Podcast" data-icon="fas fa-microphone-alt" data-type="external-link" data-url="https://brasilescola.uol.com.br/podcasts/historia.htm" class="dock-item flex flex-col items-center p-2 rounded-xl">
-                <i class="fas fa-microphone-alt text-3xl text-pink-500"></i>
+            <button data-title="Podcast" data-icon="fas fa-microphone-alt" data-type="external-link" data-url="https://brasilescola.uol.com.br/podcasts/historia.htm" class="dock-item flex flex-col items-center p-2 rounded-xl flex-shrink-0">
+                <i class="fas fa-microphone-alt text-2xl sm:text-3xl text-pink-500"></i>
                 <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Podcast</span>
             </button>
                   
             <!-- Item: Infográficos (LARANJA) - Atualizado para Link Externo -->
-            <button data-title="Infográficos" data-icon="fas fa-chart-bar" data-type="external-link" data-url="https://geografiavisual.com.br/categoria/infografico" class="dock-item flex flex-col items-center p-2 rounded-xl">
-                <i class="fas fa-chart-bar text-3xl text-orange-400"></i>
+            <button data-title="Infográficos" data-icon="fas fa-chart-bar" data-type="external-link" data-url="https://geografiavisual.com.br/categoria/infografico" class="dock-item flex flex-col items-center p-2 rounded-xl flex-shrink-0">
+                <i class="fas fa-chart-bar text-2xl sm:text-3xl text-orange-400"></i>
                 <span class="text-xs mt-1 font-medium hidden sm:block dock-label">Infográficos</span>
             </button>
             
             <!-- Item: INEP/ENEM (AMARELO) - Atualizado para Link Externo e URL fornecida -->
-            <button data-title="INEP/ENEM" data-icon="fas fa-link" data-type="external-link" data-url="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem" class="dock-item flex flex-col items-center p-2 rounded-xl">
-                <i class="fas fa-link text-3xl text-yellow-400"></i>
+            <button data-title="INEP/ENEM" data-icon="fas fa-link" data-type="external-link" data-url="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem" class="dock-item flex flex-col items-center p-2 rounded-xl flex-shrink-0">
+                <i class="fas fa-link text-2xl sm:text-3xl text-yellow-400"></i>
                 <span class="text-xs mt-1 font-medium hidden sm:block dock-label">INEP/ENEM</span>
             </button>
 
@@ -298,23 +642,89 @@
         // Conteúdo para as janelas modais dos ícones do Desktop (Mantido)
         const modalContents = {
             'Lira Dutra': `
-                <h2 class="text-2xl font-bold mb-4 text-gray-800">Sobre o Criador e Agente Cultural</h2>
-                <div class="text-lg space-y-4 leading-relaxed text-gray-700">
-                    <p>Criado por Lira Dutra<br>
-                    <img src="https://static.ndmais.com.br/eleicoes/2024/ce/FCE60001982176_div.jpg" alt="Girl in a jacket" width="200" height="300">               
-                    Sou professor, agente cultural, poeta, artista visual e o criador do programa e canal Vozes da Macaboqueira. Já produzi vários documentários e publiquei 2 livros.</p>
-                    <p>Dentre minhas conquistas, destacam-se a aprovação de diversos projetos nos editais da cultura a nível local e Estadual.</p>
-                    <p class="mt-4 p-3 bg-blue-50 border-l-4 border-blue-500 font-semibold">
-                        Siga no Instagram: <a href="https://www.instagram.com/liradutraoficial" target="_blank" class="text-blue-600 hover:text-blue-800 transition">@liradutraoficial</a>
-                    </p>
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <img src="https://static.ndmais.com.br/eleicoes/2024/ce/FCE60001982176_div.jpg" alt="Lira Dutra" class="profile-image">
+                        <h1 class="profile-name">Lira Dutra</h1>
+                        <p class="profile-title">Professor, Agente Cultural e Criador do Programa Vozes da Macaboqueira</p>
+                        <div class="profile-badges">
+                            <span class="badge">Professor</span>
+                            <span class="badge">Poeta</span>
+                            <span class="badge">Artista Visual</span>
+                            <span class="badge">Produtor Cultural</span>
+                        </div>
+                    </div>
+                    <div class="profile-content">
+                        <div class="profile-section">
+                            <h3><i class="fas fa-user-graduate"></i> Sobre</h3>
+                            <p>Sou professor, agente cultural, poeta, artista visual e o criador do programa e canal Vozes da Macaboqueira. Com uma trajetória dedicada à educação e à cultura, já produzi vários documentários e publiquei 2 livros que refletem meu compromisso com a arte e o conhecimento.</p>
+                        </div>
+                        
+                        <div class="profile-section">
+                            <h3><i class="fas fa-trophy"></i> Conquistas e Realizações</h3>
+                            <div class="achievement-list">
+                                <div class="achievement-item">
+                                    <h4>Programa Vozes da Macaboqueira</h4>
+                                    <p>Criação e produção de programa cultural que dá voz à comunidade</p>
+                                </div>
+                                <div class="achievement-item">
+                                    <h4>Documentários</h4>
+                                    <p>Produção de diversos documentários focados em cultura e sociedade</p>
+                                </div>
+                                <div class="achievement-item">
+                                    <h4>Publicações Literárias</h4>
+                                    <p>Autor de 2 livros que exploram a interseção entre poesia e arte visual</p>
+                                </div>
+                                <div class="achievement-item">
+                                    <h4>Projetos Culturais</h4>
+                                    <p>Aprovação de diversos projetos em editais culturais locais e estaduais</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-section">
+                            <h3><i class="fas fa-heart"></i> Paixões e Propósito</h3>
+                            <p>Minha trajetória é guiada pela crença no poder transformador da educação e da cultura. Através do ensino e da produção artística, busco criar pontes entre o conhecimento acadêmico e as expressões culturais populares, valorizando especialmente as narrativas e vozes das comunidades.</p>
+                        </div>
+                        
+                        <div class="social-links">
+                            <a href="https://www.instagram.com/liradutraoficial" target="_blank" class="social-link">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             `,
             'Geografia para Enem': `
                 <h2 class="text-2xl font-bold mb-4 text-gray-800">Temas essenciais de Geografia para o ENEM</h2>
                 <p class="mb-4 text-lg text-gray-800">
                 
-                <center><img src="https://blog-es-static.infra.grancursosonline.com.br/wp-content/uploads/2024/06/17211152/assuntos-de-geografia-que-mais-caem-no-enem.jpg" alt="geografia" width="500" height="900"> </center>      
+                <img src="https://blog-es-static.infra.grancursosonline.com.br/wp-content/uploads/2024/06/17211152/assuntos-de-geografia-que-mais-caem-no-enem.jpg" alt="Geografia para ENEM" class="modal-image rounded-lg my-4">      
                 Os principais temas de Geografia para o ENEM são urbanização, agropecuária, questões ambientais, geopolítica e relevo. É fundamental também estudar sobre migrações, globalização, interpretação de mapas, climatologia, hidrografia e o estudo da população e demografia.</p>
+                
+                <div class="flashcard my-6">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <h3 class="text-xl font-bold text-center">O que é Urbanização?</h3>
+                        </div>
+                        <div class="flashcard-back">
+                            <p class="text-center">Processo de crescimento das cidades, com aumento da população urbana em relação à rural.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sticky-note my-4">
+                    <strong>Dica:</strong> Foque em entender os impactos da urbanização no Brasil, especialmente problemas como moradia e transporte.
+                </div>
                 
                 <h3 class="text-xl font-semibold mt-4 mb-2 text-teal-600">Temas de Destaque</h3>
                 <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
@@ -324,6 +734,15 @@
                     <li><strong>Geopolítica:</strong> Relações entre países, acordos, conflitos e o cenário político e econômico global.</li>
                     <li><strong>Relevo e Geomorfologia:</strong> Formação do relevo, tipos de rochas e os fatores (endógenos e exógenos) que moldam a superfície terrestre, com atenção especial ao Brasil.</li>
                 </ul>
+
+                <div class="my-6 p-4 bg-blue-50 rounded-lg">
+                    <h4 class="font-bold text-blue-800 mb-2">Quiz Rápido - Geografia</h4>
+                    <p class="mb-3">Qual destes NÃO é um problema relacionado à urbanização?</p>
+                    <div class="quiz-option" data-correct="false">A) Falta de moradia adequada</div>
+                    <div class="quiz-option" data-correct="false">B) Congestionamentos</div>
+                    <div class="quiz-option" data-correct="true">C) Aumento da produção agrícola</div>
+                    <div class="quiz-option" data-correct="false">D) Poluição do ar</div>
+                </div>
 
                 <h3 class="text-xl font-semibold mt-4 mb-2 text-teal-600">Outros Temas Importantes</h3>
                 <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
@@ -338,9 +757,24 @@
             'História para Enem': `
                 <h2 class="text-2xl font-bold mb-4 text-gray-800">Temas essenciais de História para o ENEM</h2>
                 <p class="mb-4 text-lg text-gray-700">
-                <center><img src="https://www.gov.br/inep/pt-br/centrais-de-conteudo/noticias/enem/edital-do-enem-2025-publicado/cabecalho-31-3-copiar-3-2.png/@@images/cbeac3c2-f96b-494a-9724-63fd3066cacc.png" alt="história" width="500" height="1200"> </center> 
+                <img src="https://www.gov.br/inep/pt-br/centrais-de-conteudo/noticias/enem/edital-do-enem-2025-publicado/cabecalho-31-3-copiar-3-2.png/@@images/cbeac3c2-f96b-494a-9724-63fd3066cacc.png" alt="História para ENEM" class="modal-image rounded-lg my-4"> 
                 Os principais temas de História para o ENEM são a História do Brasil Colonial e Imperial (com ênfase na escravidão, abolição e segundo reinado), a Primeira República e a Era Vargas (direitos trabalhistas, industrialização e Ditadura do Estado Novo) e a Ditadura Militar no Brasil.</p>
                 <p class="mb-4 text-lg text-gray-700">Na História Geral, o Iluminismo, a Revolução Industrial e os eventos do século XX, como a Primeira e Segunda Guerras Mundiais e a Guerra Fria, também são recorrentes.</p>
+                
+                <div class="flashcard my-6">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <h3 class="text-xl font-bold text-center">O que foi a Era Vargas?</h3>
+                        </div>
+                        <div class="flashcard-back">
+                            <p class="text-center">Período de 15 anos em que Getúlio Vargas governou o Brasil, marcado pela criação de leis trabalhistas e centralização do poder.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sticky-note my-4">
+                    <strong>Dica:</strong> Preste atenção nas causas e consequências da Segunda Guerra Mundial e seu impacto no Brasil.
+                </div>
                 
                 <h3 class="text-xl font-semibold mt-4 mb-2 text-yellow-600">História do Brasil</h3>
                 <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
@@ -349,6 +783,15 @@
                     <li><strong>Era Vargas:</strong> Estude os direitos trabalhistas, o processo de industrialização, a Era Vargas como um todo e a Ditadura do Estado Novo.</li>
                     <li><strong>Ditadura Militar:</strong> Questões sobre o regime militar e a luta por democracia são importantes.</li>
                 </ul>
+
+                <div class="my-6 p-4 bg-blue-50 rounded-lg">
+                    <h4 class="font-bold text-blue-800 mb-2">Quiz Rápido - História</h4>
+                    <p class="mb-3">Qual evento histórico NÃO aconteceu durante a Era Vargas?</p>
+                    <div class="quiz-option" data-correct="false">A) Criação da CLT</div>
+                    <div class="quiz-option" data-correct="false">B) Criação do Estado Novo</div>
+                    <div class="quiz-option" data-correct="true">C) Proclamação da República</div>
+                    <div class="quiz-option" data-correct="false">D) Criação da Petrobrás</div>
+                </div>
 
                 <h3 class="text-xl font-semibold mt-4 mb-2 text-yellow-600">História Geral</h3>
                 <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
@@ -380,6 +823,12 @@
         const modal = document.getElementById('desktop-modal');
         const modalTitleBar = document.querySelector('.modal-title-bar');
 
+        // --- Variáveis para Ferramentas Interativas ---
+        let isHighlighterActive = false;
+        let currentHighlighterColor = 'yellow';
+        let isUnderlineActive = false;
+        let isNoteActive = false;
+
 
         // Função para exibir mensagens customizadas (substitui alert() para Dock Items)
         function showMessage(title, message) {
@@ -398,51 +847,58 @@
 
         // Implementação do Minimizar (Botão Amarelo)
         function minimizeDesktopModal() {
-            if (modal.classList.contains('hidden')) return; 
+            if (!modal.classList.contains('open')) return; 
 
-            modal.classList.add('hidden');
+            modal.classList.remove('open');
             document.getElementById('modal-overlay').classList.add('hidden');
             isMinimized = true;
         }
 
         // Função para fechar a Janela Modal do Desktop (Botão Vermelho)
         function closeDesktopModal() {
-            // Garante que o modal esteja no estado "restaurado" antes de fechar
-            modal.classList.remove('maximized');
-            document.getElementById('maximize-icon').classList.remove('fa-compress-arrows-alt');
-            document.getElementById('maximize-icon').classList.add('fa-expand-arrows-alt');
-            document.getElementById('maximize-modal-btn').title = "Maximizar";
+            // Remove a classe de abertura primeiro para animação de fechar
+            modal.classList.remove('open');
+            
+            // Aguarda a transição antes de esconder completamente
+            setTimeout(() => {
+                // Garante que o modal esteja no estado "restaurado" antes de fechar
+                modal.classList.remove('maximized');
+                document.getElementById('maximize-icon').classList.remove('fa-compress-arrows-alt');
+                document.getElementById('maximize-icon').classList.add('fa-expand-arrows-alt');
+                document.getElementById('maximize-modal-btn').title = "Maximizar";
 
-            modal.classList.add('hidden');
-            document.getElementById('modal-overlay').classList.add('hidden');
-            
-            // Limpa os estados
-            document.getElementById('modal-content-area').innerHTML = ''; 
-            currentOpenTitle = null;
-            isMinimized = false;
-            
-            // Reseta a posição para o centro da tela (importante para drag and drop)
-            modal.style.top = '50%';
-            modal.style.left = '50%';
-            modal.style.transform = 'translate(-50%, -50%)';
+                document.getElementById('modal-overlay').classList.add('hidden');
+                
+                // Limpa os estados
+                document.getElementById('modal-content-area').innerHTML = ''; 
+                currentOpenTitle = null;
+                isMinimized = false;
+                
+                // Desativa a barra de ferramentas
+                document.getElementById('interactive-toolbar').classList.add('hidden');
+            }, 300);
         }
 
         // Função para abrir ou restaurar a Janela Modal do Desktop
         function openDesktopModal(title, htmlContent) {
+            console.log('Abrindo modal:', title);
+            
             // Se estiver minimizada E o mesmo item for clicado, RESTAURA
             if (isMinimized && currentOpenTitle === title) {
-                modal.classList.remove('hidden');
+                console.log('Restaurando modal minimizada');
+                modal.classList.add('open');
                 document.getElementById('modal-overlay').classList.remove('hidden');
                 isMinimized = false;
-            } else if (currentOpenTitle === title && !modal.classList.contains('hidden')) {
+            } else if (currentOpenTitle === title && modal.classList.contains('open')) {
                 // Já está aberta, ignora
+                console.log('Modal já está aberta, ignorando');
                 return;
             } else {
+                console.log('Abrindo novo conteúdo');
                 // Abre um novo conteúdo
                 document.getElementById('modal-title').textContent = title;
                 document.getElementById('modal-content-area').innerHTML = htmlContent;
                 document.getElementById('modal-overlay').classList.remove('hidden');
-                modal.classList.remove('hidden');
                 currentOpenTitle = title;
                 isMinimized = false; 
                 
@@ -455,7 +911,19 @@
                 // Reseta a posição para o centro da tela
                 modal.style.top = '50%';
                 modal.style.left = '50%';
-                modal.style.transform = 'translate(-50%, -50%)';
+                
+                // Aplica o efeito de surgir
+                setTimeout(() => {
+                    modal.classList.add('open');
+                }, 10);
+
+                // Ativa a barra de ferramentas para conteúdos interativos (exceto PDF)
+                if (title !== 'Resumão') {
+                    document.getElementById('interactive-toolbar').classList.remove('hidden');
+                    setupInteractiveTools();
+                } else {
+                    document.getElementById('interactive-toolbar').classList.add('hidden');
+                }
             }
         }
 
@@ -484,7 +952,7 @@
                 modal.style.transition = 'all 0.3s ease'; 
                 modal.style.top = '50%';
                 modal.style.left = '50%';
-                modal.style.transform = 'translate(-50%, -50%)';
+                modal.style.transform = 'translate(-50%, -50%) scale(1)';
 
                 document.getElementById('maximize-icon').classList.remove('fa-compress-arrows-alt');
                 document.getElementById('maximize-icon').classList.add('fa-expand-arrows-alt');
@@ -492,7 +960,7 @@
             }
         }
 
-        // --- Draggable Logic ---
+        // --- Draggable Logic (sem efeito gelatina) ---
 
         function dragStart(e) {
             // Não permite arrastar se estiver maximizada ou se for um clique nos botões de controle
@@ -512,6 +980,9 @@
             modalTitleBar.style.cursor = 'grabbing';
             modal.style.transition = 'none'; // Desativa transição para arrasto suave
             modal.style.zIndex = 50; // Traz para frente de outros elementos (opcional, mas bom)
+            
+            // Aplica efeito visual durante o arrasto
+            modal.classList.add('dragging');
         }
 
         function drag(e) {
@@ -538,6 +1009,193 @@
             modalTitleBar.style.cursor = 'grab'; 
             modal.style.transition = 'all 0.3s ease'; // Reativa a transição
             modal.style.zIndex = 40;
+            
+            // Remove o efeito de arrasto
+            modal.classList.remove('dragging');
+        }
+
+        // --- Funções para Ferramentas Interativas ---
+
+        function setupInteractiveTools() {
+            // Configura os eventos para as ferramentas interativas
+            const highlighterBtn = document.getElementById('highlighter-btn');
+            const underlineBtn = document.getElementById('underline-btn');
+            const noteBtn = document.getElementById('note-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const colorOptions = document.querySelectorAll('.color-option');
+            
+            // Evento para ativar/desativar o marcador
+            highlighterBtn.addEventListener('click', () => {
+                isHighlighterActive = !isHighlighterActive;
+                isUnderlineActive = false;
+                isNoteActive = false;
+                
+                updateToolStates();
+                
+                if (isHighlighterActive) {
+                    document.getElementById('modal-content-area').style.cursor = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\'%3E%3Cpath fill=\'' + 
+                    (currentHighlighterColor === 'yellow' ? '%23FFEB3B' : 
+                     currentHighlighterColor === 'pink' ? '%23F48FB1' : 
+                     currentHighlighterColor === 'blue' ? '%2381D4FA' : '%23A5D6A7') + 
+                    '\' d=\'M2 20h20v4H2z\'/%3E%3C/svg%3E") 0 24, auto';
+                } else {
+                    document.getElementById('modal-content-area').style.cursor = 'auto';
+                }
+            });
+            
+            // Evento para ativar/desativar sublinhado
+            underlineBtn.addEventListener('click', () => {
+                isUnderlineActive = !isUnderlineActive;
+                isHighlighterActive = false;
+                isNoteActive = false;
+                
+                updateToolStates();
+                
+                if (isUnderlineActive) {
+                    document.getElementById('modal-content-area').style.cursor = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\'%3E%3Cpath fill=\'%23000\' d=\'M12 17c3.31 0 6-2.69 6-6V3h-2.5v8c0 1.93-1.57 3.5-3.5 3.5S8.5 12.93 8.5 11V3H6v8c0 3.31 2.69 6 6 6zm-7 2v2h14v-2H5z\'/%3E%3C/svg%3E") 0 24, auto';
+                } else {
+                    document.getElementById('modal-content-area').style.cursor = 'auto';
+                }
+            });
+            
+            // Evento para adicionar notas
+            noteBtn.addEventListener('click', () => {
+                isNoteActive = !isNoteActive;
+                isHighlighterActive = false;
+                isUnderlineActive = false;
+                
+                updateToolStates();
+                
+                if (isNoteActive) {
+                    document.getElementById('modal-content-area').style.cursor = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\'%3E%3Cpath fill=\'%23FFA000\' d=\'M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z\'/%3E%3C/svg%3E") 0 24, auto';
+                } else {
+                    document.getElementById('modal-content-area').style.cursor = 'auto';
+                }
+            });
+            
+            // Evento para limpar anotações
+            clearBtn.addEventListener('click', () => {
+                const highlighted = document.querySelectorAll('.highlight-yellow, .highlight-pink, .highlight-blue, .highlight-green, .text-annotation');
+                highlighted.forEach(el => {
+                    const parent = el.parentNode;
+                    parent.replaceChild(document.createTextNode(el.textContent), el);
+                    parent.normalize();
+                });
+                
+                const notes = document.querySelectorAll('.sticky-note.user-note');
+                notes.forEach(note => note.remove());
+                
+                showMessage('Anotações Limpas', 'Todas as suas anotações foram removidas.');
+            });
+            
+            // Eventos para seleção de cores
+            colorOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    currentHighlighterColor = option.getAttribute('data-color');
+                    colorOptions.forEach(opt => opt.classList.remove('ring-2', 'ring-blue-500'));
+                    option.classList.add('ring-2', 'ring-blue-500');
+                });
+            });
+            
+            // Evento para aplicar marcações ao texto selecionado
+            document.getElementById('modal-content-area').addEventListener('mouseup', (e) => {
+                const selection = window.getSelection();
+                const selectedText = selection.toString().trim();
+                
+                if (selectedText.length === 0) return;
+                
+                if (isHighlighterActive) {
+                    const range = selection.getRangeAt(0);
+                    const selectedContent = range.extractContents();
+                    const span = document.createElement('span');
+                    
+                    span.appendChild(selectedContent);
+                    span.className = `highlight-${currentHighlighterColor}`;
+                    
+                    range.insertNode(span);
+                    selection.removeAllRanges();
+                    
+                    // Desativa o marcador após uso
+                    isHighlighterActive = false;
+                    updateToolStates();
+                    document.getElementById('modal-content-area').style.cursor = 'auto';
+                }
+                
+                if (isUnderlineActive) {
+                    const range = selection.getRangeAt(0);
+                    const selectedContent = range.extractContents();
+                    const span = document.createElement('span');
+                    
+                    span.appendChild(selectedContent);
+                    span.className = 'text-annotation';
+                    
+                    range.insertNode(span);
+                    selection.removeAllRanges();
+                    
+                    // Desativa o sublinhado após uso
+                    isUnderlineActive = false;
+                    updateToolStates();
+                    document.getElementById('modal-content-area').style.cursor = 'auto';
+                }
+                
+                if (isNoteActive) {
+                    const noteText = prompt('Digite sua nota:', '');
+                    if (noteText) {
+                        const noteElement = document.createElement('div');
+                        noteElement.className = 'sticky-note user-note';
+                        noteElement.innerHTML = `<strong>Sua nota:</strong> ${noteText}`;
+                        
+                        const range = selection.getRangeAt(0);
+                        range.collapse(false);
+                        range.insertNode(noteElement);
+                        
+                        selection.removeAllRanges();
+                        
+                        // Desativa a adição de notas após uso
+                        isNoteActive = false;
+                        updateToolStates();
+                        document.getElementById('modal-content-area').style.cursor = 'auto';
+                    }
+                }
+            });
+            
+            // Configura os flashcards
+            document.querySelectorAll('.flashcard').forEach(card => {
+                card.addEventListener('click', () => {
+                    card.classList.toggle('flipped');
+                });
+            });
+            
+            // Configura os quizzes
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    const isCorrect = option.getAttribute('data-correct') === 'true';
+                    
+                    // Remove classes anteriores
+                    document.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.classList.remove('correct', 'incorrect');
+                    });
+                    
+                    // Aplica a classe correta/incorreta
+                    if (isCorrect) {
+                        option.classList.add('correct');
+                        showMessage('Resposta Correta!', 'Parabéns, você acertou!');
+                    } else {
+                        option.classList.add('incorrect');
+                        showMessage('Resposta Incorreta', 'Tente novamente!');
+                    }
+                });
+            });
+        }
+        
+        function updateToolStates() {
+            const highlighterBtn = document.getElementById('highlighter-btn');
+            const underlineBtn = document.getElementById('underline-btn');
+            const noteBtn = document.getElementById('note-btn');
+            
+            highlighterBtn.classList.toggle('active', isHighlighterActive);
+            underlineBtn.classList.toggle('active', isUnderlineActive);
+            noteBtn.classList.toggle('active', isNoteActive);
         }
 
         /**
@@ -579,8 +1237,7 @@
             document.getElementById('close-modal-btn').addEventListener('click', closeDesktopModal);
             document.getElementById('modal-overlay').addEventListener('click', closeDesktopModal);
             document.getElementById('maximize-modal-btn').addEventListener('click', toggleMaximize);
-            document.getElementById('minimize-modal-btn').addEventListener('click', minimizeDesktopModal); // Novo listener para Minimizar
-
+            document.getElementById('minimize-modal-btn').addEventListener('click', minimizeDesktopModal);
 
             // 3. Adiciona listeners para o Draggable (Mouse e Touch)
             modalTitleBar.addEventListener('mousedown', dragStart);
@@ -590,7 +1247,6 @@
             modalTitleBar.addEventListener('touchstart', dragStart);
             document.addEventListener('touchmove', drag);
             document.addEventListener('touchend', dragEnd);
-
 
             // 4. Adiciona listeners de clique para os Ícones da Área de Trabalho (Abre/Restaura Modal)
             document.querySelectorAll('.desktop-icon').forEach(icon => {
